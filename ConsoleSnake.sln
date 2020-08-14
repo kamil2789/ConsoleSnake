@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSnake", "ConsoleSnake\ConsoleSnake.csproj", "{43F3DD40-8269-4F67-9B7F-8CE5E7B23FBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTConsoleSnake", "UTConsoleSnake\UTConsoleSnake.csproj", "{6CE00B3D-243C-48C3-B57D-5B65BB8D561F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43F3DD40-8269-4F67-9B7F-8CE5E7B23FBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F3DD40-8269-4F67-9B7F-8CE5E7B23FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F3DD40-8269-4F67-9B7F-8CE5E7B23FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F3DD40-8269-4F67-9B7F-8CE5E7B23FBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE00B3D-243C-48C3-B57D-5B65BB8D561F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE00B3D-243C-48C3-B57D-5B65BB8D561F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE00B3D-243C-48C3-B57D-5B65BB8D561F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE00B3D-243C-48C3-B57D-5B65BB8D561F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35335E3E-979C-4563-9493-61115B10FF11}
+	EndGlobalSection
+EndGlobal
