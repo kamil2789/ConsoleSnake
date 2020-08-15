@@ -16,17 +16,12 @@ namespace ConsoleSnake
             gameBoard = new char[gameConfig.GameSize.Item1,gameConfig.GameSize.Item2];
         }
 
-        public void GetSnakeTail(LinkedList<Coordinates> snakeCoordinates)
+        public void ReadGameManagerData(GameManager gameManager)
         {
-            foreach(Coordinates cord in snakeCoordinates)
-            {
-                gameBoard[cord.cordX, cord.cordY] = snakeTail;
-            }
-        }
-
-        public void GetSnakeHead(Coordinates snakeHeadCords)
-        {
-            gameBoard[snakeHeadCords.cordX, snakeHeadCords.cordY] = snakeHead;
+            Array.Clear(gameBoard, 0, gameBoard.Length);
+            GetSnakeTail(gameManager.snake.Tails);
+            GetSnakeHead(gameManager.snake.Head);
+            GetApple(gameManager.Apple);
         }
 
         public void DisplayGame()
@@ -34,6 +29,32 @@ namespace ConsoleSnake
             DisplayTopFrame();
             DisplayGameBoard();
             DisplayTopFrame();
+        }
+
+        public void ClearConsole()
+        {
+            Console.Clear();
+        }
+
+        private void GetSnakeTail(LinkedList<Coordinates> snakeCoordinates)
+        {
+            foreach(Coordinates cord in snakeCoordinates)
+            {
+                gameBoard[cord.cordX, cord.cordY] = snakeTail;
+            }
+        }
+
+        private void GetSnakeHead(Coordinates snakeHeadCords)
+        {
+            gameBoard[snakeHeadCords.cordX, snakeHeadCords.cordY] = snakeHead;
+        }
+
+        private void GetApple(Coordinates apple)
+        {
+            if (apple.cordX > 0 || apple.cordY > 0 )
+            {
+                gameBoard[apple.cordX, apple.cordY] = appleSymbol;
+            }
         }
 
         private void DisplayTopFrame()
@@ -68,5 +89,6 @@ namespace ConsoleSnake
         const char sidewalls = (char)124;
         const char snakeHead = 'H';
         const char snakeTail = 'x';
+        const char appleSymbol = 'a';
     }
 }

@@ -33,7 +33,7 @@ namespace ConsoleSnake
             {
                 tails.RemoveLast();
                 tails.AddFirst(new Coordinates(head.cordX, head.cordY));
-                head = MoveSnakeHead(direction);
+                head = CalculateNewHeadPosition(direction);
 
                 return true;
             }
@@ -48,7 +48,7 @@ namespace ConsoleSnake
             if (!IsCollisionWithTail(direction))
             {
                 tails.AddFirst(new Coordinates(head.cordX, head.cordY));
-                head = MoveSnakeHead(direction);
+                head = CalculateNewHeadPosition(direction);
 
                 return true;
             }
@@ -58,7 +58,7 @@ namespace ConsoleSnake
             }
         }
 
-        private Coordinates MoveSnakeHead(Direction direction)
+        public Coordinates CalculateNewHeadPosition(Direction direction)
         {
             Coordinates result = new Coordinates(head.cordX, head.cordY);
             switch (direction)
@@ -82,7 +82,7 @@ namespace ConsoleSnake
 
         private bool IsCollisionWithTail(Direction direction)
         {
-            Coordinates futureHeadPosition = MoveSnakeHead(direction);
+            Coordinates futureHeadPosition = CalculateNewHeadPosition(direction);
             if (tails.Find(futureHeadPosition) == null)
             {
                 return false;

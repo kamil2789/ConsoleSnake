@@ -6,8 +6,8 @@ namespace ConsoleSnake
 {
     interface IView
     {
-        void GetSnakeTail(LinkedList<Coordinates> snakeCoordinates);
-        void GetSnakeHead(Coordinates snakeCoordinates);
+        void ReadGameManagerData(GameManager gameManager);
         void DisplayGame();
+        void ClearConsole();
     }
 }
