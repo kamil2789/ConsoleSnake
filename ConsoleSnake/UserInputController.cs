@@ -9,9 +9,15 @@ namespace ConsoleSnake
         private IUserInput userInput;
 
         public UserInputController(IUserInput userInput) => this.userInput = userInput;
+
+        public void DecreaseDelay()
+        {
+            userInput.DecreaseDelay();
+        }
+
         public Direction DecodeUserInput()
         {
-            switch(userInput.GetUserInput().Key)
+            switch(userInput.GetUserInput())
             {
                 case ConsoleKey.S:
                     return Direction.Down;

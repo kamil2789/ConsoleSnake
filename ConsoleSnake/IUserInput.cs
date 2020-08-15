@@ -6,6 +6,7 @@ namespace ConsoleSnake
 {
     interface IUserInput
     {
-        ConsoleKeyInfo GetUserInput();
+        ConsoleKey GetUserInput();
+        void DecreaseDelay();
     }
 }

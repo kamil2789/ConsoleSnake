@@ -75,11 +75,6 @@ namespace ConsoleSnake
 
         public bool CreateApple()
         {
-            if (isAppleInGame)
-            {
-                return true;
-            }
-
             const int maxRetry = 10;
             int actualRetry = 0;
             while(actualRetry < maxRetry)
