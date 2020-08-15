@@ -7,7 +7,7 @@ namespace ConsoleSnake
         static void Main(string[] args)
         {
             //init//
-            GameConfig gameConfig = new GameConfig(8, 12);
+            GameConfig gameConfig = new GameConfig(12, 8);
             View view = new View(gameConfig);
             UserInputController userInputController = new UserInputController(new UserInput());
             GameManager gameManager = new GameManager(gameConfig, new Snake(new Coordinates(4, 6)), new RandomGenerator());

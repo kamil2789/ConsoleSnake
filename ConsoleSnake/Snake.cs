@@ -83,6 +83,7 @@ namespace ConsoleSnake
         private bool IsCollisionWithTail(Direction direction)
         {
             Coordinates futureHeadPosition = CalculateNewHeadPosition(direction);
+
             if (tails.Find(futureHeadPosition) == null)
             {
                 return false;

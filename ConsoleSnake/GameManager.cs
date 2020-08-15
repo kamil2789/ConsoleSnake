@@ -4,13 +4,13 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    class GameManager
+    public class GameManager
     {
         public Snake snake;
         private bool isAppleInGame;
         private Coordinates apple;
         private GameConfig gameConfig;
-        private IRandomGenerator randomGenerator;
+        private readonly IRandomGenerator randomGenerator;
 
         public GameManager(GameConfig gameConfig, Snake snake, IRandomGenerator randomGenerator)
         {
@@ -32,14 +32,30 @@ namespace ConsoleSnake
             get => isAppleInGame;
         }
 
+        public int GetAppleCount()
+        {
+            return gameConfig.Apple;
+        }
+
+        static Direction lastDirection = Direction.Left;
         public bool ProcessMove(Direction direction)
         {
             var headCords = snake.CalculateNewHeadPosition(direction);
+
+            if (headCords.Equals(snake.Tails.First.Value))
+            {
+                direction = lastDirection;
+                return snake.MoveSnake(direction);
+            }
+
             if (headCords.Equals(apple))
             {
                 snake.ExpandSnake(direction);
                 gameConfig.IncrementApples();
                 isAppleInGame = false;
+                apple.cordX = -1;
+                apple.cordY = -1;
+                lastDirection = direction;
                 return true;
             }
 
@@ -53,6 +69,7 @@ namespace ConsoleSnake
                 return false;
             }
 
+            lastDirection = direction;
             return snake.MoveSnake(direction);
         }
 

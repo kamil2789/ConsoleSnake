@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    interface IRandomGenerator
+    public interface IRandomGenerator
     {
         Coordinates generateRandomCords(int rangeX, int rangeY);
     }

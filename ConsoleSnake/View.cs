@@ -7,12 +7,14 @@ namespace ConsoleSnake
 {
     class View : IView
     {
-        readonly GameConfig gameConfig;
-        char[,] gameBoard;
+        private readonly GameConfig gameConfig;
+        private int collectedApples;
+        private char[,] gameBoard;
 
         public View(GameConfig gameConfig)
         {
             this.gameConfig = gameConfig;
+            collectedApples = 0;
             gameBoard = new char[gameConfig.GameSize.Item1,gameConfig.GameSize.Item2];
         }
 
@@ -21,7 +23,7 @@ namespace ConsoleSnake
             Array.Clear(gameBoard, 0, gameBoard.Length);
             GetSnakeTail(gameManager.snake.Tails);
             GetSnakeHead(gameManager.snake.Head);
-            GetApple(gameManager.Apple);
+            GetApple(gameManager.Apple, gameManager.GetAppleCount());
         }
 
         public void DisplayGame()
@@ -29,11 +31,17 @@ namespace ConsoleSnake
             DisplayTopFrame();
             DisplayGameBoard();
             DisplayTopFrame();
+            DisplayAppleCounter();
         }
 
         public void ClearConsole()
         {
             Console.Clear();
+        }
+
+        private void DisplayAppleCounter()
+        {
+            Console.WriteLine($"Collected apples {collectedApples}");
         }
 
         private void GetSnakeTail(LinkedList<Coordinates> snakeCoordinates)
@@ -49,12 +57,14 @@ namespace ConsoleSnake
             gameBoard[snakeHeadCords.cordX, snakeHeadCords.cordY] = snakeHead;
         }
 
-        private void GetApple(Coordinates apple)
+        private void GetApple(Coordinates apple, int appleCount)
         {
             if (apple.cordX > 0 || apple.cordY > 0 )
             {
                 gameBoard[apple.cordX, apple.cordY] = appleSymbol;
             }
+
+            collectedApples = appleCount;
         }
 
         private void DisplayTopFrame()

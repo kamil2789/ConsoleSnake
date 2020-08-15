@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    class GameConfig
+    public class GameConfig
     {
         private readonly int gameSizeX;
         private readonly int gameSizeY;
@@ -15,6 +15,11 @@ namespace ConsoleSnake
             this.gameSizeX = gameSizeX;
             this.gameSizeY = gameSizeY;
             apples = 0;
+        }
+
+        public int Apple
+        {
+            get => apples;
         }
 
         public (int, int) GameSize
