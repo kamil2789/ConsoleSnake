@@ -73,40 +73,40 @@ namespace ConsoleSnake
 
         public bool CreateApple(Coordinates randomCords, int maxCordX, int maxCordY)
         {
-            const int maxRetry = 10;
-            int actualRetry = 0;
-            while(actualRetry < maxRetry)
-            {
-                applePosition = randomCords;
-                if (IsCordsConflictWithSnake(applePosition) == false)
-                {
-                    isApple = true;
-                    return true;
-                }
-                actualRetry++;
-            }
+            applePosition = randomCords;
 
-            applePosition.cordX = 0;
-            applePosition.cordY = 0;
-            while (IsCordsConflictWithSnake(applePosition))
+            if (IsCordsConflictWithSnake(randomCords) == false)
             {
-                if (applePosition.cordX < maxCordX - 1)
-                {
-                    applePosition.cordX++;
-                }
-                else if (applePosition.cordY < maxCordY - 1)
-                {
-                    applePosition.cordX = 0;
-                    applePosition.cordY++;
-                }
-                else if (applePosition.cordX == maxCordX - 1 && applePosition.cordY == maxCordY - 1)
-                {
-                    return false;
-                }
+                isApple = true;
+                return true;
             }
+            else
+            {
+                while (IsCordsConflictWithSnake(applePosition))
+                {
+                    if (applePosition.cordX < maxCordX - 1)
+                    {
+                        applePosition.cordX++;
+                    }
+                    else if (applePosition.cordY < maxCordY - 1)
+                    {
+                        applePosition.cordX = 0;
+                        applePosition.cordY++;
+                    }
+                    else if (applePosition.cordX == maxCordX - 1 && applePosition.cordY == maxCordY - 1)
+                    {
+                        applePosition.cordX = 0;
+                        applePosition.cordY = 0;
+                    }
+                    else if (applePosition.cordX == randomCords.cordX && applePosition.cordY == randomCords.cordY)
+                    {
+                        return false;
+                    }
+                }
 
-            isApple = true;
-            return true;
+                isApple = true;
+                return true;
+            }
         }
 
         private bool IsCordsConflictWithSnake(Coordinates cord)
