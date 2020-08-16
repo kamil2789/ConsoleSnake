@@ -16,6 +16,14 @@ namespace ConsoleSnake
             tails.AddFirst(new Coordinates(head.cordX + 1, head.cordY));
         }
 
+        public Snake(int headStartX, int headStartY)
+        {
+            head.cordX = headStartX;
+            head.cordY = headStartY;
+            tails = new LinkedList<Coordinates>();
+            tails.AddFirst(new Coordinates(head.cordX + 1, head.cordY));
+        }
+
         public Coordinates Head
         {
             get => head;

@@ -4,131 +4,57 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    public class GameManager
+    class GameManager
     {
-        public Snake snake;
-        private bool isAppleInGame;
-        private Coordinates apple;
         private GameConfig gameConfig;
-        private readonly IRandomGenerator randomGenerator;
+        private SnakeController snakeController;
+        private readonly IUserInput userInput;
+        private  readonly IRandomGenerator randomGenerator;
+        private readonly IView view;
 
-        public GameManager(GameConfig gameConfig, Snake snake, IRandomGenerator randomGenerator)
+        public void MainGameLoop()
         {
-            isAppleInGame = false;
+            view.ReadGameData(snakeController, gameConfig.Apples);
+            view.DisplayGame();
+
+            bool isRunGame = true;
+            while(isRunGame)
+            {
+                if (snakeController.IsApple == false)
+                {
+                    isRunGame = snakeController.CreateApple(randomGenerator.generateRandomCords(), gameConfig.GameSizeX, gameConfig.GameSizeY);
+                    gameConfig.IncrementApples();
+                    userInput.DecreaseDelay();
+                }
+                else
+                {
+                    isRunGame = snakeController.ProcessMove(userInput.GetUserInput(), gameConfig.GameSizeX, gameConfig.GameSizeY);
+
+                    view.ClearConsole();
+                    view.ReadGameData(snakeController, gameConfig.Apples);
+                    view.DisplayGame();
+                }
+            }
+            userInput.StopUserInput();
+        }
+
+        private GameManager(GameConfig gameConfig, SnakeController snakeController, IUserInput userInput, IRandomGenerator randomGenerator, IView view)
+        {
             this.gameConfig = gameConfig;
-            this.snake = snake;
-            apple.cordX = -1;
-            apple.cordY = -1;
+            this.snakeController = snakeController;
+            this.userInput = userInput;
             this.randomGenerator = randomGenerator;
+            this.view = view;
         }
 
-        public Coordinates Apple
+        public static GameManager BuildGameManager(GameConfig gameConfig)
         {
-            get => apple;
-        }
+            SnakeController snakeControllerBuild = new SnakeController(new Snake(gameConfig.GameSizeX / 2, gameConfig.GameSizeY / 2));
+            IUserInput userInputBuild = FactoryMethods.CreateUserInput(gameConfig.StartingDelay);
+            IRandomGenerator randomGeneratorBuild = FactoryMethods.CreateRandomGenerator(gameConfig.GameSizeX, gameConfig.GameSizeY);
+            IView viewBuild = FactoryMethods.CreateView(gameConfig);
 
-        public bool IsApple
-        {
-            get => isAppleInGame;
-        }
-
-        public int GetAppleCount()
-        {
-            return gameConfig.Apple;
-        }
-
-        static Direction lastDirection = Direction.Left;
-        public bool ProcessMove(Direction direction)
-        {
-            var headCords = snake.CalculateNewHeadPosition(direction);
-
-            if (headCords.Equals(snake.Tails.First.Value))
-            {
-                direction = lastDirection;
-                return snake.MoveSnake(direction);
-            }
-
-            if (headCords.Equals(apple))
-            {
-                snake.ExpandSnake(direction);
-                gameConfig.IncrementApples();
-                isAppleInGame = false;
-                apple.cordX = -1;
-                apple.cordY = -1;
-                lastDirection = direction;
-                return true;
-            }
-
-            if (headCords.cordX >= gameConfig.GameSize.Item1 || headCords.cordX < 0)
-            {
-                return false;
-            }
-
-            if (headCords.cordY >= gameConfig.GameSize.Item2 || headCords.cordY < 0)
-            {
-                return false;
-            }
-
-            lastDirection = direction;
-            return snake.MoveSnake(direction);
-        }
-
-        public bool CreateApple()
-        {
-            const int maxRetry = 10;
-            int actualRetry = 0;
-            while(actualRetry < maxRetry)
-            {
-                apple = randomGenerator.generateRandomCords(gameConfig.GameSize.Item1, gameConfig.GameSize.Item2);
-                if (IsCordsConflictWithSnake(apple) == false)
-                {
-                    isAppleInGame = true;
-                    return true;
-                }
-                actualRetry++;
-            }
-
-            apple.cordX = 0;
-            apple.cordY = 0;
-            while (IsCordsConflictWithSnake(apple))
-            {
-                if (apple.cordX < gameConfig.GameSize.Item1 - 1)
-                {
-                    apple.cordX++;
-                }
-                else if (apple.cordY < gameConfig.GameSize.Item2 - 1)
-                {
-                    apple.cordX = 0;
-                    apple.cordY++;
-                }
-                else if (apple.cordX == gameConfig.GameSize.Item1 - 1 && apple.cordY == gameConfig.GameSize.Item2 - 1)
-                {
-                    return false;
-                }
-            }
-
-            isAppleInGame = true;
-            return true;
-        }
-
-        private bool IsCordsConflictWithSnake(Coordinates cord)
-        {
-            var tailCords = snake.Tails;
-            foreach(var obj in tailCords)
-            {
-                if (obj.Equals(cord))
-                {
-                    return true;
-                }
-            }
-
-            var headCords = snake.Head;
-            if (headCords.Equals(cord))
-            {
-                return true;
-            }
-
-            return false;
+            return new GameManager(gameConfig, snakeControllerBuild, userInputBuild, randomGeneratorBuild, viewBuild);
         }
     }
 }

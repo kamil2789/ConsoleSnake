@@ -6,6 +6,6 @@ namespace ConsoleSnake
 {
     public interface IRandomGenerator
     {
-        Coordinates generateRandomCords(int rangeX, int rangeY);
+        Coordinates generateRandomCords();
     }
 }

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    interface IUserInput
+    public interface IUserInput
     {
-        ConsoleKey GetUserInput();
+        Direction GetUserInput();
+        void StopUserInput();
         void DecreaseDelay();
     }
 }

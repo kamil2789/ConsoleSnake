@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    interface IView
+    public interface IView
     {
-        void ReadGameManagerData(GameManager gameManager);
+        void ReadGameData(SnakeController gameManager, int apples);
         void DisplayGame();
         void ClearConsole();
     }

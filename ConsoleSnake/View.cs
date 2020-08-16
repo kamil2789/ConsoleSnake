@@ -18,12 +18,12 @@ namespace ConsoleSnake
             gameBoard = new char[gameConfig.GameSize.Item1,gameConfig.GameSize.Item2];
         }
 
-        public void ReadGameManagerData(GameManager gameManager)
+        public void ReadGameData(SnakeController snakeController, int Apples)
         {
             Array.Clear(gameBoard, 0, gameBoard.Length);
-            GetSnakeTail(gameManager.snake.Tails);
-            GetSnakeHead(gameManager.snake.Head);
-            GetApple(gameManager.Apple, gameManager.GetAppleCount());
+            GetSnakeTail(snakeController.snake.Tails);
+            GetSnakeHead(snakeController.snake.Head);
+            GetApple(snakeController.Apple, Apples);
         }
 
         public void DisplayGame()

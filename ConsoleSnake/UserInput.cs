@@ -18,17 +18,17 @@ namespace ConsoleSnake
             inputKey = ConsoleKey.A;
         }
 
-        public ConsoleKey GetUserInput()
+        public Direction GetUserInput()
         {
             if (!isRunInputThread)
             {
-                userInput = new Thread(() => ProcessUserInput(ref inputKey));
-                userInput.Start();
                 isRunInputThread = true;
+                userInput = new Thread(() => ProcessUserInput(ref inputKey, ref isRunInputThread));
+                userInput.Start();
             }
 
             Thread.Sleep(delay);
-            return inputKey;
+            return DecodeUserInput(inputKey);
         }
 
         public void DecreaseDelay()
@@ -36,9 +36,31 @@ namespace ConsoleSnake
             delay -= 30;
         }
 
-        private static void ProcessUserInput(ref ConsoleKey input)
+        public void StopUserInput()
         {
-            while(true)
+            isRunInputThread = false;
+        }
+
+        private Direction DecodeUserInput(ConsoleKey inputKey)
+        {
+            switch (inputKey)
+            {
+                case ConsoleKey.S:
+                    return Direction.Down;
+                case ConsoleKey.D:
+                    return Direction.Right;
+                case ConsoleKey.A:
+                    return Direction.Left;
+                case ConsoleKey.W:
+                    return Direction.Up;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private static void ProcessUserInput(ref ConsoleKey input, ref bool isRunInputThread)
+        {
+            while(isRunInputThread)
             {
                 input = Console.ReadKey().Key;
             }

@@ -4,9 +4,18 @@ using System.Text;
 
 namespace ConsoleSnake
 {
-    class RandomGenerator : IRandomGenerator
+    public class RandomGenerator : IRandomGenerator
     {
-        public Coordinates generateRandomCords(int rangeX, int rangeY)
+        private readonly int rangeX;
+        private readonly int rangeY;
+
+        public RandomGenerator(int rangeX, int rangeY)
+        {
+            this.rangeX = rangeX;
+            this.rangeY = rangeY;
+        }
+
+        public Coordinates generateRandomCords()
         {
             Random rand = new Random();
             int randCordX = rand.Next(0, rangeX);
