@@ -6,14 +6,13 @@ namespace ConsoleSnake
     {
         static void Main(string[] args)
         {
-            GameConfig gameConfig = new GameConfig(8, 4, 1000);
+            GameConfig gameConfig = new GameConfig(3, 3, 1000);
             GameManager gameManager = GameManager.BuildGameManager(gameConfig);
             gameManager.MainGameLoop();
 
-            //Fixed never endind side thread
-            //Refactoring classes
-            //Write Main
             //Write mainMenu
+            //First delete last element, then move HEAD (BUG) Fixed is change snake tail beginning length to 2
+            //Optional add graphic, big map and faster
             //Add custom configuration
             //Add UT whenever if possible
         }

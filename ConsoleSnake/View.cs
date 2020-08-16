@@ -54,12 +54,23 @@ namespace ConsoleSnake
 
         private void GetSnakeHead(Coordinates snakeHeadCords)
         {
-            gameBoard[snakeHeadCords.cordX, snakeHeadCords.cordY] = snakeHead;
+            if (ValidateRange(snakeHeadCords))
+            {
+                gameBoard[snakeHeadCords.cordX, snakeHeadCords.cordY] = snakeHead;
+            }
+        }
+
+        private bool ValidateRange(Coordinates snakeHeadCords)
+        {
+            return snakeHeadCords.cordX < gameConfig.GameSize.Item1 &&
+                snakeHeadCords.cordX >= 0 &&
+                snakeHeadCords.cordY < gameConfig.GameSize.Item2 &&
+                snakeHeadCords.cordY >= 0;
         }
 
         private void GetApple(Coordinates apple, int appleCount)
         {
-            if (apple.cordX > 0 || apple.cordY > 0 )
+            if (apple.cordX >= 0 || apple.cordY >= 0 )
             {
                 gameBoard[apple.cordX, apple.cordY] = appleSymbol;
             }

@@ -43,4 +43,13 @@ namespace ConsoleSnake
         Left,
         Right
     }
+
+    public enum SnakeEvent
+    {
+        ExpandSnake,
+        MoveSnake,
+        GameEnd,
+        None,
+        CreateApple
+    }
 }

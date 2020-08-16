@@ -17,25 +17,42 @@ namespace ConsoleSnake
             view.ReadGameData(snakeController, gameConfig.Apples);
             view.DisplayGame();
 
-            bool isRunGame = true;
-            while(isRunGame)
+            SnakeEvent snakeEvent = SnakeEvent.None;
+            while(snakeEvent != SnakeEvent.GameEnd)
             {
                 if (snakeController.IsApple == false)
                 {
-                    isRunGame = snakeController.CreateApple(randomGenerator.generateRandomCords(), gameConfig.GameSizeX, gameConfig.GameSizeY);
-                    gameConfig.IncrementApples();
-                    userInput.DecreaseDelay();
+                    snakeEvent = snakeController.CreateApple(randomGenerator.generateRandomCords(), gameConfig.GameSizeX, gameConfig.GameSizeY);
                 }
                 else
                 {
-                    isRunGame = snakeController.ProcessMove(userInput.GetUserInput(), gameConfig.GameSizeX, gameConfig.GameSizeY);
-
-                    view.ClearConsole();
-                    view.ReadGameData(snakeController, gameConfig.Apples);
-                    view.DisplayGame();
+                    snakeEvent = snakeController.ProcessMove(userInput.GetUserInput(), gameConfig.GameSizeX, gameConfig.GameSizeY);
+                    if (snakeEvent == SnakeEvent.ExpandSnake)
+                    {
+                        gameConfig.IncrementApples();
+                        userInput.DecreaseDelay();
+                    }
                 }
+
+                view.ClearConsole();
+                view.ReadGameData(snakeController, gameConfig.Apples);
+                view.DisplayGame();
             }
+            endingMessage();
             userInput.StopUserInput();
+        }
+
+        private void endingMessage()
+        {
+            if (gameConfig.Apples == gameConfig.MaxApplesToCollect)
+            {
+                Console.WriteLine("You won the game!");
+            }
+            else
+            {
+                Console.WriteLine($"Game over! Your score is {gameConfig.Apples}");
+            }
+            Console.WriteLine("Press any key to continue");
         }
 
         private GameManager(GameConfig gameConfig, SnakeController snakeController, IUserInput userInput, IRandomGenerator randomGenerator, IView view)

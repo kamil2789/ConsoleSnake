@@ -11,6 +11,7 @@ namespace ConsoleSnake
         private readonly int gameSizeY;
         private readonly int startingDelay;
         private int apples;
+        private int maxApplesToCollect;
 
         public GameConfig(int gameSizeX, int gameSizeY, int startingDelay)
         {
@@ -18,6 +19,7 @@ namespace ConsoleSnake
             this.gameSizeY = gameSizeY;
             this.startingDelay = startingDelay;
             apples = 0;
+            maxApplesToCollect = gameSizeX * gameSizeY - 2;
         }
 
         public int Apples
@@ -33,6 +35,11 @@ namespace ConsoleSnake
         public int GameSizeY
         {
             get => gameSizeY;
+        }
+
+        public int MaxApplesToCollect
+        {
+            get => maxApplesToCollect;
         }
 
         public int StartingDelay

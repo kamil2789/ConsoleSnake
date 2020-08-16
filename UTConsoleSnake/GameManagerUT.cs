@@ -18,7 +18,7 @@ namespace UTConsoleSnake
             SnakeController snakeController = new SnakeController(new Snake(new Coordinates(5, 5)));
             var result = snakeController.ProcessMove(Direction.Down, gameSizeX, gameSizeY);
 
-            Assert.True(result);
+            Assert.Equal(SnakeEvent.MoveSnake, result);
         }
     }
 }

@@ -37,9 +37,10 @@ namespace ConsoleSnake
 
         public bool MoveSnake(Direction direction)
         {
+            tails.RemoveLast();
+
             if (!IsCollisionWithTail(direction))
             {
-                tails.RemoveLast();
                 tails.AddFirst(new Coordinates(head.cordX, head.cordY));
                 head = CalculateNewHeadPosition(direction);
 

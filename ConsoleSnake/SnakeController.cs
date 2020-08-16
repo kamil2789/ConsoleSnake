@@ -30,55 +30,47 @@ namespace ConsoleSnake
             get => isApple;
         }
 
-        /*
-        public int GetAppleCount()
-        {
-            return gameConfig.Apple;
-        }
-        */
-
-        public bool ProcessMove(Direction direction, int maxCordX, int maxCordY)
+        public SnakeEvent ProcessMove(Direction direction, int maxCordX, int maxCordY)
         {
             var headCords = snake.CalculateNewHeadPosition(direction);
 
             if (headCords.Equals(snake.Tails.First.Value))
             {
                 direction = lastDirection;
-                return snake.MoveSnake(direction);
+                return snake.MoveSnake(direction) ? SnakeEvent.MoveSnake : SnakeEvent.GameEnd;
             }
 
             if (headCords.Equals(applePosition))
             {
-                snake.ExpandSnake(direction);
                 isApple = false;
                 applePosition.cordX = -1;
                 applePosition.cordY = -1;
                 lastDirection = direction;
-                return true;
+                return snake.ExpandSnake(direction) ? SnakeEvent.ExpandSnake : SnakeEvent.GameEnd;
             }
 
             if (headCords.cordX >= maxCordX || headCords.cordX < 0)
             {
-                return false;
+                return SnakeEvent.GameEnd;
             }
 
             if (headCords.cordY >= maxCordY || headCords.cordY < 0)
             {
-                return false;
+                return SnakeEvent.GameEnd;
             }
 
             lastDirection = direction;
-            return snake.MoveSnake(direction);
+            return snake.MoveSnake(direction) ? SnakeEvent.MoveSnake : SnakeEvent.GameEnd;
         }
 
-        public bool CreateApple(Coordinates randomCords, int maxCordX, int maxCordY)
+        public SnakeEvent CreateApple(Coordinates randomCords, int maxCordX, int maxCordY)
         {
             applePosition = randomCords;
 
             if (IsCordsConflictWithSnake(randomCords) == false)
             {
                 isApple = true;
-                return true;
+                return SnakeEvent.CreateApple;
             }
             else
             {
@@ -98,14 +90,17 @@ namespace ConsoleSnake
                         applePosition.cordX = 0;
                         applePosition.cordY = 0;
                     }
-                    else if (applePosition.cordX == randomCords.cordX && applePosition.cordY == randomCords.cordY)
+
+                    if (applePosition.cordX == randomCords.cordX && applePosition.cordY == randomCords.cordY)
                     {
-                        return false;
+                        applePosition.cordX = -1;
+                        applePosition.cordY = -1;
+                        return SnakeEvent.GameEnd;
                     }
                 }
 
                 isApple = true;
-                return true;
+                return SnakeEvent.CreateApple;
             }
         }
 
