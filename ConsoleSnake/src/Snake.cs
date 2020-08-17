@@ -14,6 +14,7 @@ namespace ConsoleSnake
             head = startHead;
             tails = new LinkedList<Coordinates>();
             tails.AddFirst(new Coordinates(head.cordX + 1, head.cordY));
+            tails.AddLast(new Coordinates(head.cordX + 2, head.cordY));
         }
 
         public Snake(int headStartX, int headStartY)
@@ -22,6 +23,7 @@ namespace ConsoleSnake
             head.cordY = headStartY;
             tails = new LinkedList<Coordinates>();
             tails.AddFirst(new Coordinates(head.cordX + 1, head.cordY));
+            tails.AddLast(new Coordinates(head.cordX + 2, head.cordY));
         }
 
         public Coordinates Head

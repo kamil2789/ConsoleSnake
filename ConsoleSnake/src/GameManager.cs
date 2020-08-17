@@ -9,7 +9,7 @@ namespace ConsoleSnake
         private GameConfig gameConfig;
         private SnakeController snakeController;
         private readonly IUserInput userInput;
-        private  readonly IRandomGenerator randomGenerator;
+        private readonly IRandomGenerator randomGenerator;
         private readonly IView view;
 
         public void MainGameLoop()

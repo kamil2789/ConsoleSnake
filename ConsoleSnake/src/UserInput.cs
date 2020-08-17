@@ -39,6 +39,7 @@ namespace ConsoleSnake
         public void StopUserInput()
         {
             isRunInputThread = false;
+            Console.ReadKey();
         }
 
         private Direction DecodeUserInput(ConsoleKey inputKey)
@@ -54,7 +55,7 @@ namespace ConsoleSnake
                 case ConsoleKey.W:
                     return Direction.Up;
                 default:
-                    throw new ArgumentException();
+                    return Direction.Down;
             }
         }
 
